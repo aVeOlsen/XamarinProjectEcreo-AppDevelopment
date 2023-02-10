@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.SettingsPage"
+             xmlns:viewmodels="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:model="clr-namespace:XamarinEcreo.Models"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             Title="Settings"
+             x:Name="Settings">
+    <ContentPage.BindingContext>
+        <viewmodels:SettingsViewModel/>
+    </ContentPage.BindingContext>
+    <StackLayout Padding="20">
+        <!--<Label Text="hello"></Label>
+        <Image Source="{Binding PhotoPath}" WidthRequest="66" />
+        <Label Text="hello2"></Label>-->
+        <!--<ListView ItemsSource="{Binding UserGet}" 
+                  CachingStrategy="RecycleElement"
+                  HasUnevenRows="True"
+                  SeparatorVisibility="None"
+                  BackgroundColor="White">
+            <ListView.ItemTemplate>-->
+        <!--<DataTemplate x:DataType="model:UserGetModel">-->
+        <Grid x:DataType="model:UserGetModel" BackgroundColor="White">
+            <StackLayout Padding="10">
+                <Grid Padding="10">
+                <Frame CornerRadius="50" HorizontalOptions="Center" IsClippedToBounds="True">
+                    <StackLayout Orientation="Horizontal" VerticalOptions="Center" x:DataType="model:UserGetModel">
+                        <Label Text="{Binding Firstname}"/>
+                        <Image Source="{Binding Source={x:Reference Settings}, Path=BindingContext.ImageURL}" xct:CornerRadiusEffect.CornerRadius="30"/>
+                    </StackLayout>
+                </Frame>
+                </Grid>
+                <Button Text="Change photo" Command="{Binding Source={x:Reference Settings}, Path=BindingContext.UploadPhotoCmd}"></Button>
+                <Button Text="Change Password"/>
+
+                <!--<Button Text="Upload image" Clicked="CamButton_Clicked" ></Button>-->
+                <!--<Label x:Name="UserImage" Text="{Binding Source={x:Reference Settings}, Path=BindingContext.UserGet.Firstname}"/>-->
+                <!--<Image Source="{Binding Source={x:Reference Settings}, Path=BindingContext.Image}"></Image>-->
+                <!--<Button Text="Load photo" Command="{Binding LoadPhotoCmd}"/>-->
+                <!--<Image Source="{Binding Image}" WidthRequest="66" />-->
+
+                <!--<Label Text="{Binding PhotoPath}"/>-->
+            </StackLayout>
+        </Grid>
+        <!--</DataTemplate>-->
+        <!--</ListView.ItemTemplate>
+        </ListView>-->
+    </StackLayout>
+</ContentPage>

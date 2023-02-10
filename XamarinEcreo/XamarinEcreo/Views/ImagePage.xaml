@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.ImagePage"
+             xmlns:viewmodels="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:model="clr-namespace:XamarinEcreo.Models"
+             x:Name="PhotoPage">
+    <ContentPage.BindingContext>
+        <viewmodels:ImageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            
+        <Grid>
+            
+        <StackLayout>
+                <Button Text="Upload new photo" Command="{Binding Source={x:Reference PhotoPage}, Path=BindingContext.UploadPhotoCmd}" ></Button>
+                <Button Text="Take new photo" Command="{Binding Source={x:Reference PhotoPage}, Path=BindingContext.TakePhotoCmd}"/>
+                <Frame CornerRadius="50"  WidthRequest="200" HorizontalOptions="Center" HeightRequest="200" IsClippedToBounds="True">
+                    <Image Source="{Binding Source={x:Reference PhotoPage}, Path=BindingContext.ImageURL}"/>
+                </Frame>
+            </StackLayout>
+        </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

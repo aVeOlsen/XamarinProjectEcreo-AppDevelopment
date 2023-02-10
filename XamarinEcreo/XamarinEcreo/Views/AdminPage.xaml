@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.AdminPage"
+             xmlns:model="clr-namespace:XamarinEcreo.Models"
+             xmlns:viewmodel="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodel:AdminViewModel"
+             Title="Admin"
+             x:Name="UserAdmin">
+    <ContentPage.BindingContext>
+        <viewmodel:AdminViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding AddCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ListView BackgroundColor="Transparent"
+              CachingStrategy="RecycleElement"
+              IsPullToRefreshEnabled="True"
+              IsRefreshing="{Binding IsBusy,Mode=OneWay}"
+              ItemsSource="{Binding UsersGet}"
+              HasUnevenRows="True"
+              RefreshCommand="{Binding RefreshCommand}"
+              RefreshControlColor="Red"
+              SelectionMode="None"
+              SeparatorVisibility="None">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:UserGetModel">
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Command="{Binding Source={x:Reference UserAdmin}, Path=BindingContext.RemoveCommand}"
+                                  CommandParameter="{Binding .}"
+                                  IsDestructive="True"
+                                  Text="Delete"/>
+                        <MenuItem Command="{Binding Source={x:Reference UserAdmin}, Path=BindingContext.UpdateCommand}"
+                                  CommandParameter="{Binding .}"
+                                  Text="Update"/>
+                    </ViewCell.ContextActions>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="20" HasShadow="True">
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="{Binding Image}" WidthRequest="66"/>
+                                <StackLayout VerticalOptions="Center">
+                                    <Label FontSize="Large"
+                                           Text="{Binding Firstname}"
+                                           VerticalOptions="Center"
+                                           />
+                                    <Label FontSize="Large"
+                                           Text="{Binding Lastname}"
+                                           VerticalOptions="Center"
+                                           />
+                                    <Label FontSize="Small" Text="{Binding Role}"
+                                               VerticalOptions="Center"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+</ContentPage>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.AddUserPage"
+             xmlns:viewmodels="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:model="clr-namespace:EcreoLibraryStandard;assembly=EcreoLibraryStandard"
+             x:DataType="viewmodels:AddUserViewModel"
+             x:Name="AddUser">
+    <ContentPage.BindingContext>
+        <viewmodels:AddUserViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Fornavn:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.FirstName}"/>
+            <Label Text="Efternavn:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.LastName}"/>
+            <Label Text="Email:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.Email}"/>
+            <Label Text="Telefonnummer:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.Phone}"/>
+            <Label Text="Address:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.Address}"/>
+            <Label Text="Password:"/>
+            <Entry Text="{Binding Source={x:Reference AddUser}, Path=BindingContext.Password}"/>
+            <Label Text="Role:"/>
+            <Picker Title="Select A Role" ItemsSource="{Binding AllRoles}"
+                                            SelectedIndex="{Binding SelectedRole, Converter={xct:EnumToIntConverter}}" TitleColor="Red"/>
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+            <Button
+                x:DataType="viewmodels:AddUserViewModel"
+                Padding="20,0"
+                Command="{Binding AddCommand}"
+                HorizontalOptions="Center"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Save"
+                VerticalOptions="EndAndExpand"
+                />
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

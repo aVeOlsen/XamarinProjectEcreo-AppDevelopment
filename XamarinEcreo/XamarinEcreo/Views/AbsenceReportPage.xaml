@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.AbsenceReportPage"
+             xmlns:model="clr-namespace:EcreoLibraryStandard;assembly=EcreoLibraryStandard"
+             xmlns:viewmodel="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodel:AbsenceReportViewModel"
+             Title="Meld fravær"
+             x:Name="AbsenceReport">
+    <ContentPage.BindingContext>
+        <viewmodel:AbsenceReportViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="FraværsType: "/>
+            <Picker Title="FraværsType" ItemsSource="{Binding AllRoles}" SelectedIndex="{Binding SelectedRole, 
+                Converter={xct:EnumToIntConverter}}" TitleColor="Red"/>
+            
+            <Label Text="{Binding Firstname}"/>
+            <Label Text="Meld Fravær"/>
+            <Entry Text="{Binding Reason}" Placeholder="Årsag(ikke påkrævet)"/>
+            <Button
+                Padding="20,0"
+                Command="{Binding AbsenceReportCmd}"
+                CommandParameter="{Binding .}"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Save"
+                VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

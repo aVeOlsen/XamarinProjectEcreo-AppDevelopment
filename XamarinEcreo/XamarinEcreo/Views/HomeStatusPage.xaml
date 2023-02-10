@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.HomeStatusPage"
+             xmlns:model="clr-namespace:XamarinEcreo.Models"
+             xmlns:viewmodels="clr-namespace:XamarinEcreo.ViewModels"
+             x:DataType="viewmodels:HomeStatusViewModel"
+             Title="Hjemme"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="HomeStatus">
+    <ContentPage.BindingContext>
+        <viewmodels:HomeStatusViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Report Absence" Command="{Binding OpenAbsenceCmd}"/>
+    </ContentPage.ToolbarItems>
+    <ListView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+              ItemsSource="{Binding UsersGet}"
+              RefreshCommand="{Binding RefreshCommand}"
+              IsPullToRefreshEnabled="True"
+              BackgroundColor="White"
+              CachingStrategy="RecycleElement"
+              RefreshControlColor="Red"
+              HasUnevenRows="True"
+              SelectionMode="None"
+              SeparatorVisibility="None">
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:UserGetModel">
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Command="{Binding Source={x:Reference HomeStatus}, Path=BindingContext.OpenAbsenceCmd}"
+                                  CommandParameter="{Binding .}"
+                                  IsDestructive="True"
+                                  Text="Update"/>
+                    </ViewCell.ContextActions>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="10" IsClippedToBounds="True" HasShadow="True"/>
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                            <Image Source="{Binding ImageURL}" HorizontalOptions="Center" xct:CornerRadiusEffect.CornerRadius="20" WidthRequest="66"/>
+                            <StackLayout VerticalOptions="Center">
+
+                                <Label FontSize="Large"
+                                   Text="{Binding Firstname}"
+                                   VerticalOptions="Center"/>
+                                <Label FontSize="Large"
+                                   Text="{Binding Lastname}"
+                                   VerticalOptions="Center"/>
+                                <Label FontSize="Small"
+                                   Text="{Binding CurrentAbsenceStatus}"
+                                   VerticalOptions="Center"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+
+
+</ContentPage>

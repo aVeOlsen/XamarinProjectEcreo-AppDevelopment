@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:XamarinEcreo.Behaviors"
+             x:Class="XamarinEcreo.Controls.ValidatableEntry"
+             x:Name="RootPage"
+             xmlns:controls="clr-namespace:XamarinEcreo.Controls">
+    <ContentView.Content>
+        <StackLayout>
+            <Label Text="{Binding Label, Source={x:Reference RootPage}}"/>
+                
+            <!--<Entry Placeholder="{Binding Placeholder, Source={x:Reference RootPage}}" Text="{Binding Value, Mode=OneWayToSource, Source={x:Reference RootPage}}">-->
+            <controls:FloatingLabelEntry 
+                Placeholder="{Binding Placeholder, Source={x:Reference RootPage}}" Text="{Binding Value, Mode=OneWayToSource, Source={x:Reference RootPage}}"
+                ErrorMessage="{Binding ValidationRule.ValidationMessage, Source={x:Reference RootPage}}"
+                HasError="{Binding ValidationRule, Source={x:Reference ValidationBehavior}}"
+                >
+                <Entry.Behaviors>
+                    <behaviors:ValidationBehavior x:Name="ValidationBehavior" ValidationRule="{Binding ValidationRule, 
+                        Source={x:Reference RootPage}}"/>
+                </Entry.Behaviors>
+            </controls:FloatingLabelEntry>
+            <!--</Entry>-->
+                        <Label Text="{Binding ValidationRule.ValidationMessage, Source={x:Reference RootPage}}" FontSize="12"
+                               TextColor="Gray" IsVisible="{Binding HasError, Source={x:Reference ValidationBehavior}}"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinEcreo.Views.OfficeStatusPage"
+             xmlns:viewmodels="clr-namespace:XamarinEcreo.ViewModels"
+             xmlns:model="clr-namespace:XamarinEcreo.Models"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:local="clr-namespace:XamarinEcreo.Behaviors"
+             x:DataType="viewmodels:OfficeStatusViewModel"
+             Title="Kontor"
+             x:Name="OfficeStatus">
+    <ContentPage.BindingContext>
+        <viewmodels:OfficeStatusViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+            <!--<xct:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Report Absence" Command="{Binding OpenAbsenceCmd}" CommandParameter="{Binding .}" />
+    </ContentPage.ToolbarItems>
+    <ListView IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+              ItemsSource="{Binding UsersGet}"
+              RefreshCommand="{Binding RefreshCommand}"
+              IsPullToRefreshEnabled="True"
+              BackgroundColor="White"
+              CachingStrategy="RecycleElement"
+              RefreshControlColor="{x:OnPlatform iOS=Gray, Android=Red}"
+              HasUnevenRows="True"
+              SelectionMode="None"
+              SeparatorVisibility="None">
+        <ListView.Behaviors>
+            <xct:EventToCommandBehavior EventName="ItemSelected"
+                                        Command="{Binding OpenAbsenceCmd}"
+                                        EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}"
+                                        />
+        </ListView.Behaviors>
+        <ListView.ItemTemplate>
+            <DataTemplate x:DataType="model:UserGetModel">
+                <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Command="{Binding Source={x:Reference OfficeStatus}, Path=BindingContext.OpenAbsenceCmd}"
+                                  CommandParameter="{Binding .}"
+                                  IsDestructive="True"
+                                  Text="Update"/>
+                    </ViewCell.ContextActions>
+                    <Grid Padding="10">
+                        <Frame CornerRadius="10" IsClippedToBounds="True" HasShadow="True"/>
+
+                        <StackLayout Padding="10" Orientation="Horizontal">
+                                <Image Source="{Binding ImageURL}" HorizontalOptions="Center" WidthRequest="66" xct:CornerRadiusEffect.CornerRadius="20"/>
+                                <StackLayout VerticalOptions="Center">
+
+                                    <Label FontSize="Large"
+                                   Text="{Binding Firstname, Mode=OneTime}"
+                                   VerticalOptions="Center"/>
+                                    <Label FontSize="Large"
+                                   Text="{Binding Lastname, Mode=OneTime}"
+                                   VerticalOptions="Center"/>
+                                    <Label FontSize="Small"
+                                   Text="{Binding CurrentAbsenceStatus}"
+                                   VerticalOptions="Center"/>
+                                </StackLayout>
+                            </StackLayout>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+
+    </ListView>
+
+
+</ContentPage>
